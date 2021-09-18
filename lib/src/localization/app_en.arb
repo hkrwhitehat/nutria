@@ -1,0 +1,6 @@
+{
+  "appTitle": "nutria",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
