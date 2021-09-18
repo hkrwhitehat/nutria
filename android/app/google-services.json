@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "208268361998",
+    "project_id": "nutria-de550",
+    "storage_bucket": "nutria-de550.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208268361998:android:333821a0600d256e6c975f",
+        "android_client_info": {
+          "package_name": "com.tndcube.nutria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208268361998-g9rdvjoq2m7ang43pbv3jav5k20fk1b5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tndcube.nutria",
+            "certificate_hash": "06f0059a896d0681a1f1b35e57ddbf39bae3b810"
+          }
+        },
+        {
+          "client_id": "208268361998-umbadikoavi2ud058s1n727t4jgp4hah.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tndcube.nutria",
+            "certificate_hash": "3e4d60446f40fd3bb4951676d2a270d45e298854"
+          }
+        },
+        {
+          "client_id": "208268361998-5q061f77i9q55fv00as9fikt1sdj358f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMzPj7ezwQiNon8CmwtAzWFtDbpk1yQyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208268361998-5q061f77i9q55fv00as9fikt1sdj358f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
