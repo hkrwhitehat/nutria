@@ -165,27 +165,31 @@ class MealsView extends StatelessWidget {
                                   children: <Widget>[
                                     mealData?.totalCal != 0
                                         ? Text(
-                                      [
-                                        for (var data in mealData!.foodList!)
-                                          data.name
-                                      ].join('\n'),
-                                      style: const TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10,
-                                        letterSpacing: 0.2,
-                                        color: FitnessAppTheme.white,
-                                      ),
-                                    ): Text(
-                                      'Recommended:\n${mealData!.recommendedCal.toString()}kcal',
-                                      style: const TextStyle(
-                                        fontFamily: FitnessAppTheme.fontName,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10,
-                                        letterSpacing: 0.2,
-                                        color: FitnessAppTheme.white,
-                                      ),
-                                    ),
+                                            [
+                                              for (var data
+                                                  in mealData!.foodList!)
+                                                data.name
+                                            ].join('\n'),
+                                            style: const TextStyle(
+                                              fontFamily:
+                                                  FitnessAppTheme.fontName,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                              letterSpacing: 0.2,
+                                              color: FitnessAppTheme.white,
+                                            ),
+                                          )
+                                        : Text(
+                                            'Recommended:\n${mealData!.recommendedCal.toString()}kcal',
+                                            style: const TextStyle(
+                                              fontFamily:
+                                                  FitnessAppTheme.fontName,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                              letterSpacing: 0.2,
+                                              color: FitnessAppTheme.white,
+                                            ),
+                                          ),
                                   ],
                                 ),
                               ),
@@ -224,26 +228,33 @@ class MealsView extends StatelessWidget {
                                     ],
                                   )
                                 : Container(
-                                    decoration: BoxDecoration(
-                                      color: FitnessAppTheme.nearlyWhite,
-                                      shape: BoxShape.circle,
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                            color: FitnessAppTheme.nearlyBlack
-                                                .withOpacity(0.4),
-                                            offset: const Offset(8.0, 8.0),
-                                            blurRadius: 8.0),
-                                      ],
+
+                                    ///Add food button
+                                    // decoration: BoxDecoration(
+                                    //   color: FitnessAppTheme.nearlyWhite,
+                                    //   shape: BoxShape.circle,
+                                    //   boxShadow: <BoxShadow>[
+                                    //     BoxShadow(
+                                    //         color: FitnessAppTheme.nearlyBlack
+                                    //             .withOpacity(0.4),
+                                    //         offset: const Offset(8.0, 8.0),
+                                    //         blurRadius: 8.0),
+                                    //   ],
+                                    // ),
+                                    // child: GestureDetector(
+                                    //   child: Padding(
+                                    //     padding: const EdgeInsets.all(6.0),
+                                    //     child: Icon(
+                                    //       Icons.add,
+                                    //       color: HexColor(mealData!.endColor!),
+                                    //       size: 24,
+                                    //     ),
+                                    //   ),
+                                    //   onTap: () {
+                                    //     ///todo add food
+                                    //   },
+                                    // ),
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: HexColor(mealData!.endColor!),
-                                        size: 24,
-                                      ),
-                                    ),
-                                  ),
                           ],
                         ),
                       ),

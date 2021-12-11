@@ -4,6 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:nutria/src/screen/fitness_app_home_screen.dart';
+import 'package:nutria/src/screen/login/create_account_page.dart';
+import 'package:nutria/src/service/diary_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class SignInPage extends StatefulWidget {
   static const routeName = '/login';
@@ -33,129 +37,151 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return LoadingOverlay(
-          isLoading: isLoading,
-          child: Scaffold(
-              backgroundColor: Colors.white,
-              body: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      height: 400,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/background.png'),
-                              fit: BoxFit.fill)),
-                      child: Stack(
-                        children: <Widget>[
-                          Positioned(
-                            left: 30,
-                            width: 80,
-                            height: 200,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/light-1.png'))),
-                            ),
-                          ),
-                          Positioned(
-                            left: 140,
-                            width: 80,
-                            height: 150,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/light-2.png'))),
-                            ),
-                          ),
-                          Positioned(
-                            right: 40,
-                            top: 40,
-                            width: 80,
-                            height: 150,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/clock.png'))),
-                            ),
-                          ),
-                          Positioned(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 50),
-                              child: const Center(
-                                child: Text(
-                                  "NUTRIA",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 40,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Roboto'),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 50),
-                    GestureDetector(
-                      child: Container(
-                        height: 50,
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            gradient: const LinearGradient(colors: [
-                              Color.fromRGBO(143, 148, 251, 1),
-                              Color.fromRGBO(143, 148, 251, .6),
-                            ])),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(
-                              'assets/images/google.png',
-                              width: 30,
-                              height: 30,
-                            ),
-                            const SizedBox(width: 10),
-                            const Center(
-                              child: Text(
-                                "Sign in with Google",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Roboto'),
-                              ),
-                            ),
-                          ],
+      isLoading: isLoading,
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 400,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/background.png'),
+                          fit: BoxFit.fill)),
+                  child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        left: 30,
+                        width: 80,
+                        height: 200,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/light-1.png'))),
                         ),
                       ),
-                      onTap: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        FirebaseService service = FirebaseService();
-                        try {
-                          await service.signInWithGoogle();
-                          Navigator.restorablePushReplacementNamed(
-                              context, FitnessAppHomeScreen.routeName);
-                        } catch (e) {
-                          if (e is FirebaseAuthException) {
-                            showMessage(e.message!);
-                          }
-                        }
-                        setState(() {
-                          isLoading = false;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 50),
-                  ],
+                      Positioned(
+                        left: 140,
+                        width: 80,
+                        height: 150,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/light-2.png'))),
+                        ),
+                      ),
+                      Positioned(
+                        right: 40,
+                        top: 40,
+                        width: 80,
+                        height: 150,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage('assets/images/clock.png'))),
+                        ),
+                      ),
+                      Positioned(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 50),
+                          child: const Center(
+                            child: Text(
+                              "NUTRIA",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Roboto'),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              )),
-        );
+                const SizedBox(height: 50),
+                GestureDetector(
+                  child: Container(
+                    height: 50,
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(colors: [
+                          Color.fromRGBO(143, 148, 251, 1),
+                          Color.fromRGBO(143, 148, 251, .6),
+                        ])),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/images/google.png',
+                          width: 30,
+                          height: 30,
+                        ),
+                        const SizedBox(width: 10),
+                        const Center(
+                          child: Text(
+                            "Sign in with Google",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Roboto'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  onTap: () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    FirebaseService service = FirebaseService();
+                    try {
+                      await service.signInWithGoogle();
+                      service._auth.authStateChanges().listen((User? user) async {
+                        print('### Login User Data : $user');
+                        Provider.of<DiaryProvider>(context, listen: false).setUser(user!);
+                        Provider.of<DiaryProvider>(context, listen: false).checkUser(user.email!).then((value) {
+                          if(value == true) {
+                            Provider.of<DiaryProvider>(context, listen: false)
+                                .getUserData()
+                                .then((value) async {
+                              // await Future.delayed(const Duration(seconds: 5));
+                              if (value == true) {
+                                await Provider.of<DiaryProvider>(context, listen: false)
+                                    .getMyDiary(DateFormat('ddMMyyyy')
+                                    .format(DateTime.now()));
+                                Navigator.restorablePushReplacementNamed(
+                                    context, FitnessAppHomeScreen.routeName);
+                              }
+                            });
+                          } else {
+                            Navigator.restorablePushReplacementNamed(
+                                context, CreateAccountPage.routeName);
+                          }
+                        });
+
+                      });
+                    } catch (e) {
+                      if (e is FirebaseAuthException) {
+                        showMessage(e.message!);
+                      }
+                    }
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
+                ),
+                const SizedBox(height: 50),
+              ],
+            ),
+          )),
+    );
   }
 
   void showMessage(String message) {

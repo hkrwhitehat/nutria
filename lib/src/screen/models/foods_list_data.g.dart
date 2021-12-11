@@ -17,14 +17,16 @@ Map<String, dynamic> _$FoodToJson(Food instance) => <String, dynamic>{
     };
 
 FoodData _$FoodDataFromJson(Map<String, dynamic> json) => FoodData(
-      titleTxt: json['titleTxt'] as String?,
+      key: json['key'] as String?,
+      foodName: json['foodName'] as String?,
       startColor: json['startColor'] as String?,
       endColor: json['endColor'] as String?,
       kacl: json['kacl'] as int? ?? 0,
     );
 
 Map<String, dynamic> _$FoodDataToJson(FoodData instance) => <String, dynamic>{
-      'titleTxt': instance.titleTxt,
+      'key': instance.key,
+      'foodName': instance.foodName,
       'startColor': instance.startColor,
       'endColor': instance.endColor,
       'kacl': instance.kacl,

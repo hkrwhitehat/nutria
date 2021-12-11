@@ -7,11 +7,12 @@ import '../models/tabIcon_data.dart';
 
 class BottomBarView extends StatefulWidget {
   const BottomBarView(
-      {Key? key, this.tabIconsList, this.changeIndex, this.addClick})
+      {Key? key, this.tabIconsList, this.changeIndex, this.addClick, this.longPress})
       : super(key: key);
 
   final Function(int index)? changeIndex;
   final Function()? addClick;
+  final Function()? longPress;
   final List<TabIconData>? tabIconsList;
   @override
   _BottomBarViewState createState() => _BottomBarViewState();
@@ -164,6 +165,7 @@ class _BottomBarViewState extends State<BottomBarView>
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
                           onTap: widget.addClick,
+                          onLongPress: widget.longPress,
                           child: Image.asset(
                             'assets/images/nutria_logo.png',
                             color: FitnessAppTheme.white,

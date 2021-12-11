@@ -3,6 +3,17 @@ import 'package:json_annotation/json_annotation.dart';
 part 'my_diary.g.dart';
 
 @JsonSerializable(anyMap: true, explicitToJson: true)
+class DiaryData {
+  DiaryData({this.diaryData});
+
+  List<MyDiary>? diaryData;
+
+  factory DiaryData.fromJson(Map<String, dynamic> json) => _$DiaryDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$DiaryDataToJson(this);
+}
+
+@JsonSerializable(anyMap: true, explicitToJson: true)
 class MyDiary {
   MyDiary(
       {this.uid,

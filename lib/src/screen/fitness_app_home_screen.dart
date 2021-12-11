@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nutria/src/screen/food/food_screen.dart';
 import 'package:nutria/src/screen/profile/profile_screen.dart';
+import 'package:nutria/src/service/admin_provider.dart';
 import 'package:nutria/src/service/diary_provider.dart';
 import 'package:nutria/src/service/food_dao.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import 'bottom_navigation_view/bottom_bar_view.dart';
 import 'fitness_app_theme.dart';
 import 'models/tabIcon_data.dart';
 import 'my_diary/my_diary_screen.dart';
+import 'package:intl/intl.dart';
 
 class FitnessAppHomeScreen extends StatefulWidget {
   static const routeName = '/fitness';
@@ -33,6 +35,9 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
   @override
   void initState() {
+    Provider.of<DiaryProvider>(context, listen: false).getUserData().then(
+        (value) => Provider.of<DiaryProvider>(context, listen: false)
+            .getMyDiary(DateFormat('ddMMyyyy').format(DateTime.now())));
     tabIconsList.forEach((TabIconData tab) {
       tab.isSelected = false;
     });
@@ -52,27 +57,24 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [ChangeNotifierProvider.value(value: DiaryProvider())],
-      child: Container(
-        color: FitnessAppTheme.background,
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: FutureBuilder<bool>(
-            future: getData(),
-            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-              if (!snapshot.hasData) {
-                return const SizedBox();
-              } else {
-                return Stack(
-                  children: <Widget>[
-                    tabBody,
-                    bottomBar(),
-                  ],
-                );
-              }
-            },
-          ),
+    return Container(
+      color: FitnessAppTheme.background,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: FutureBuilder<bool>(
+          future: getData(),
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            if (!snapshot.hasData) {
+              return const SizedBox();
+            } else {
+              return Stack(
+                children: <Widget>[
+                  tabBody,
+                  bottomBar(),
+                ],
+              );
+            }
+          },
         ),
       ),
     );
@@ -98,8 +100,17 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
 
             // DiaryProvider().addUser();
             // DiaryProvider().getUserData();
-            // DiaryProvider().addDiary();
-            DiaryProvider().getMyDiary(DateTime.now().toString());
+            // DiaryProvider().createDiary();
+            DiaryProvider().getMyDiary(DateFormat('ddMMyyyy').format(DateTime.now()));
+          },
+          longPress: () {
+            print('### long press');
+            final adminProvider = Provider.of<AdminProvider>(context, listen: false);
+            if(adminProvider.isAdmin) {
+              adminProvider.enableAdminAccess(false);
+            } else {
+              adminProvider.enableAdminAccess(true);
+            }
           },
           changeIndex: (int index) {
             if (index == 0) {

@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "208268361998-rhhgugmfik2m8075t80nnk7v018hn6hh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tndcube.nutria",
+            "certificate_hash": "60f3b1a0c42d02e522fe7c431d7d9cc36adb832a"
+          }
+        },
+        {
           "client_id": "208268361998-umbadikoavi2ud058s1n727t4jgp4hah.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

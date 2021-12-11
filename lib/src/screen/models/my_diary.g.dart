@@ -6,6 +6,16 @@ part of 'my_diary.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+DiaryData _$DiaryDataFromJson(Map json) => DiaryData(
+      diaryData: (json['diaryData'] as List<dynamic>?)
+          ?.map((e) => MyDiary.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DiaryDataToJson(DiaryData instance) => <String, dynamic>{
+      'diaryData': instance.diaryData?.map((e) => e.toJson()).toList(),
+    };
+
 MyDiary _$MyDiaryFromJson(Map json) => MyDiary(
       uid: json['uid'] as String?,
       name: json['name'] as String?,

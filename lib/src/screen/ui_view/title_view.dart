@@ -6,13 +6,15 @@ class TitleView extends StatelessWidget {
   final String subTxt;
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final VoidCallback? onTap;
 
   const TitleView(
       {Key? key,
       this.titleTxt = "",
       this.subTxt = "",
       this.animationController,
-      this.animation})
+      this.animation,
+      this.onTap})
       : super(key: key);
 
   @override
@@ -48,31 +50,34 @@ class TitleView extends StatelessWidget {
                     onTap: () {},
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            subTxt,
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              fontFamily: FitnessAppTheme.fontName,
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                              letterSpacing: 0.5,
-                              color: FitnessAppTheme.nearlyDarkBlue,
+                      child: GestureDetector(
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              subTxt,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontFamily: FitnessAppTheme.fontName,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 16,
+                                letterSpacing: 0.5,
+                                color: FitnessAppTheme.nearlyDarkBlue,
+                              ),
                             ),
-                          ),
-                          subTxt != ''
-                              ? const SizedBox(
-                                  height: 38,
-                                  width: 26,
-                                  child: Icon(
-                                    Icons.arrow_forward,
-                                    color: FitnessAppTheme.darkText,
-                                    size: 18,
-                                  ),
-                                )
-                              : const SizedBox.shrink(),
-                        ],
+                            subTxt != ''
+                                ? const SizedBox(
+                                    height: 38,
+                                    width: 26,
+                                    child: Icon(
+                                      Icons.arrow_forward,
+                                      color: FitnessAppTheme.darkText,
+                                      size: 18,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
+                        ),
+                        onTap: onTap,
                       ),
                     ),
                   )

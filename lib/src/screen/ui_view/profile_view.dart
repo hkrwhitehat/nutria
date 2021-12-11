@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nutria/src/screen/home.dart';
 import 'package:nutria/src/screen/login/sign_in_page.dart';
+import 'package:nutria/src/service/diary_provider.dart';
 import 'package:nutria/src/utilities/format.dart';
+import 'package:provider/provider.dart';
 import '../fitness_app_theme.dart';
+import 'package:restart_app/restart_app.dart';
 
 class ProfileView extends StatelessWidget {
   final AnimationController? animationController;
@@ -147,8 +150,27 @@ class ProfileView extends StatelessWidget {
                                 ),
                                 onTap: () {
                                   FirebaseService service = FirebaseService();
-                                  Navigator.pushReplacementNamed(context, HomePage.routeName);
-                                  service.signOutFromGoogle();
+                                  // FirebaseAuth.instance.currentUser!
+                                  //     .delete()
+                                  //     .then((value) => service
+                                  //             .signOutFromGoogle()
+                                  //             .then((value) {
+                                  //           Provider.of<DiaryProvider>(context,
+                                  //                   listen: false)
+                                  //               .reset();
+                                  //           Navigator.pushReplacementNamed(
+                                  //               context, HomePage.routeName);
+                                  //         }));
+                                  service
+                                      .signOutFromGoogle()
+                                      .then((value) async {
+                                    await Provider.of<DiaryProvider>(context,
+                                        listen: false)
+                                        .reset();
+                                    // Restart.restartApp();
+                                    Navigator.pushReplacementNamed(
+                                        context, HomePage.routeName);
+                                  });
                                 },
                               ),
                             )

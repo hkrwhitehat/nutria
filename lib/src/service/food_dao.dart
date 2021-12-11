@@ -11,99 +11,107 @@ class FoodDao {
     _foodRef.push().set(foodData.toJson());
   }
 
+  Future<void> addFood({required String key, required FoodData data}) async {
+    _foodRef.child(key).set(data.toJson()).whenComplete(() {
+      print('### Success Add food');
+    }).catchError((error) {
+      print('Failed to add food: $error');
+    });
+  }
+
   void initialFoodList() {
     _foodRef.push().set(FoodData(
-          titleTxt: 'Noodle',
+          foodName: 'Noodle',
           kacl: 333,
           startColor: '#FA7D82',
           endColor: '#FFB295',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Tofu',
+          foodName: 'Tofu',
           kacl: 150,
           startColor: '#738AE6',
           endColor: '#5C5EDD',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Rice',
+          foodName: 'Rice',
           kacl: 345,
           startColor: '#FE95B6',
           endColor: '#FF5287',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Corn Flakes',
+          foodName: 'Corn Flakes',
           kacl: 387,
           startColor: '#6F72CA',
           endColor: '#1E1466',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Baby Corn',
+          foodName: 'Baby Corn',
           kacl: 37,
           startColor: '#FA7D82',
           endColor: '#FFB295',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Watermelon',
+          foodName: 'Watermelon',
           kacl: 24,
           startColor: '#738AE6',
           endColor: '#5C5EDD',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Honeydew',
+          foodName: 'Honeydew',
           kacl: 24,
           startColor: '#FE95B6',
           endColor: '#FF5287',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Pomegranate',
+          foodName: 'Pomegranate',
           kacl: 80,
           startColor: '#6F72CA',
           endColor: '#1E1466',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Beef Sausage',
+          foodName: 'Beef Sausage',
           kacl: 194,
           startColor: '#FA7D82',
           endColor: '#FFB295',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Chicken Sausage',
+          foodName: 'Chicken Sausage',
           kacl: 193,
           startColor: '#738AE6',
           endColor: '#5C5EDD',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Egg Noodles',
+          foodName: 'Egg Noodles',
           kacl: 335,
           startColor: '#FE95B6',
           endColor: '#FF5287',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Spaghetti',
+          foodName: 'Spaghetti',
           kacl: 347,
           startColor: '#6F72CA',
           endColor: '#1E1466',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Biscuit Choc Chip',
+          foodName: 'Biscuit Choc Chip',
           kacl: 479,
           startColor: '#FA7D82',
           endColor: '#FFB295',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Bun Kaya',
+          foodName: 'Bun Kaya',
           kacl: 103,
           startColor: '#738AE6',
           endColor: '#5C5EDD',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Potato Chip',
+          foodName: 'Potato Chip',
           kacl: 483,
           startColor: '#FE95B6',
           endColor: '#FF5287',
         ).toJson());
     _foodRef.push().set(FoodData(
-          titleTxt: 'Soy Sauce',
+          foodName: 'Soy Sauce',
           kacl: 189,
           startColor: '#6F72CA',
           endColor: '#1E1466',
@@ -112,5 +120,21 @@ class FoodDao {
 
   Query getFoodListQuery() {
     return _foodRef;
+  }
+
+  Future<void> updateFood(FoodData data) async {
+    _foodRef.child(data.key!).set(data.toJson()).whenComplete(() {
+      print('### Success Update');
+    }).catchError((error) {
+      print('Failed to update food: $error');
+    });
+  }
+
+  Future<void> deleteFood(String key) async {
+    _foodRef.child(key).remove().whenComplete(() {
+      print('### Success Delete');
+    }).catchError((error) {
+      print('Failed to delete food: $error');
+    });
   }
 }

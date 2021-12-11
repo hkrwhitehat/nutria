@@ -12,25 +12,25 @@ class Food {
 
   static Food foodList = Food(data: [
     FoodData(
-      titleTxt: 'Breakfast',
+      foodName: 'Breakfast',
       kacl: 525,
       startColor: '#FA7D82',
       endColor: '#FFB295',
     ),
     FoodData(
-      titleTxt: 'Lunch',
+      foodName: 'Lunch',
       kacl: 602,
       startColor: '#738AE6',
       endColor: '#5C5EDD',
     ),
     FoodData(
-      titleTxt: 'Snack',
+      foodName: 'Snack',
       kacl: 1300,
       startColor: '#FE95B6',
       endColor: '#FF5287',
     ),
     FoodData(
-      titleTxt: 'Dinner',
+      foodName: 'Dinner',
       kacl: 89,
       startColor: '#6F72CA',
       endColor: '#1E1466',
@@ -41,13 +41,15 @@ class Food {
 @JsonSerializable()
 class FoodData {
   FoodData({
-    this.titleTxt,
+    this.key,
+    this.foodName,
     this.startColor,
     this.endColor,
     this.kacl = 0,
   });
 
-  String? titleTxt;
+  String? key;
+  String? foodName;
   String? startColor;
   String? endColor;
   int? kacl;
@@ -57,25 +59,25 @@ class FoodData {
 
   static List<FoodData> foodList = <FoodData>[
     FoodData(
-      titleTxt: 'Breakfast',
+      foodName: 'Breakfast',
       kacl: 525,
       startColor: '#FA7D82',
       endColor: '#FFB295',
     ),
     FoodData(
-      titleTxt: 'Lunch',
+      foodName: 'Lunch',
       kacl: 602,
       startColor: '#738AE6',
       endColor: '#5C5EDD',
     ),
     FoodData(
-      titleTxt: 'Snack',
+      foodName: 'Snack',
       kacl: 1300,
       startColor: '#FE95B6',
       endColor: '#FF5287',
     ),
     FoodData(
-      titleTxt: 'Dinner',
+      foodName: 'Dinner',
       kacl: 89,
       startColor: '#6F72CA',
       endColor: '#1E1466',

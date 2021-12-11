@@ -62,21 +62,33 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
     });
     super.initState();
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Provider.of<DiaryProvider>(context, listen: false)
-          .getMyDiary(DateTime.now().toString());
-      Provider.of<DiaryProvider>(context, listen: false)
-          .getUserData();
+    Provider.of<DiaryProvider>(context, listen: false)
+        .getUserData()
+        .then((value) {
+      final diaryProvider = Provider.of<DiaryProvider>(context, listen: false);
+      if (diaryProvider.myDiaryData != null) {
+        print('### not null');
+        diaryProvider.getMyDiary(diaryProvider.myDiaryData!.date!);
+      } else {
+        print('### null');
+        diaryProvider.getMyDiary(DateFormat('ddMMyyyy').format(DateTime.now()));
+      }
     });
+    // WidgetsBinding.instance!.addPostFrameCallback((_) {
+    //   Provider.of<DiaryProvider>(context, listen: false)
+    //       .getMyDiary(DateFormat('ddMMyyyy').format(DateTime.now()));
+    //   Provider.of<DiaryProvider>(context, listen: false)
+    //       .getUserData();
+    // });
   }
 
-  void addAllListData(MyDiary? myDiaryData) {
+  void addAllListData(DiaryProvider diaryProvider) {
     const int count = 9;
     listViews.clear();
 
     listViews.add(
       TitleView(
-        titleTxt: DateFormat('EEEE').format(DateTime.parse(myDiaryData!.date!)),
+        titleTxt: diaryProvider.currentDay!,
         animation: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: widget.animationController!,
             curve: const Interval((1 / count) * 0, 1.0,
@@ -183,7 +195,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
         backgroundColor: Colors.transparent,
         body: Consumer<DiaryProvider>(builder: (context, notifier, _) {
           if (notifier.myDiaryData != null) {
-            addAllListData(notifier.myDiaryData);
+            addAllListData(notifier);
             return Stack(
               children: <Widget>[
                 getMainListViewUI(),
@@ -194,6 +206,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
               ],
             );
           } else {
+            notifier.getMyDiary(DateFormat('ddMMyyyy').format(DateTime.now()));
             return const Center(child: CircularProgressIndicator());
           }
         }),
@@ -229,9 +242,6 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
   }
 
   Widget getAppBarUI(DiaryProvider notifier) {
-    var dairyDate = DateFormat('dd MMM')
-        .format(DateTime.parse(notifier.myDiaryData!.date!));
-    var currentDairyDate = notifier.myDiaryData!.date!;
     var nowDate = DateFormat('dd MMM').format(DateTime.now());
     return Column(
       children: <Widget>[
@@ -292,21 +302,24 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                             SizedBox(
                               height: 38,
                               width: 38,
-                              child: notifier.backArrow
+                              child: notifier.backArrow &&
+                                      notifier.diaryList!.length != 1
                                   ? InkWell(
                                       highlightColor: Colors.transparent,
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(32.0)),
                                       onTap: () {
-                                        notifier.isFirst(DateTime.parse(
-                                                currentDairyDate)
-                                            .subtract(const Duration(days: 2))
-                                            .toString());
-                                        notifier.getMyDiary(DateTime.parse(
-                                                currentDairyDate)
-                                            .subtract(const Duration(days: 1))
-                                            .toString());
-                                        // widget.animationController!.reset();
+                                        notifier.setRightArrow(true);
+                                        int index = notifier.diaryList!
+                                            .indexOf(notifier.myDiaryData!);
+                                        if (index == 1) {
+                                          notifier.setMyDiaryData(
+                                              notifier.diaryList![index - 1]);
+                                          notifier.setBackArrow(false);
+                                        } else {
+                                          notifier.setMyDiaryData(
+                                              notifier.diaryList![index - 1]);
+                                        }
                                       },
                                       child: const Center(
                                         child: Icon(
@@ -333,7 +346,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                                     ),
                                   ),
                                   Text(
-                                    dairyDate,
+                                    notifier.currentDate!,
                                     textAlign: TextAlign.left,
                                     style: const TextStyle(
                                       fontFamily: FitnessAppTheme.fontName,
@@ -351,20 +364,21 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
                             SizedBox(
                               height: 38,
                               width: 38,
-                              child: dairyDate != nowDate
+                              child: notifier.rightArrow &&
+                                      nowDate != notifier.currentDate
                                   ? InkWell(
                                       highlightColor: Colors.transparent,
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(32.0)),
                                       onTap: () {
-                                        notifier.isFirst(
-                                            DateTime.parse(currentDairyDate)
-                                                .add(const Duration(days: 1))
-                                                .toString());
-                                        notifier.getMyDiary(
-                                            DateTime.parse(currentDairyDate)
-                                                .add(const Duration(days: 1))
-                                                .toString());
+                                        notifier.setBackArrow(true);
+                                        int index = notifier.diaryList!
+                                            .indexOf(notifier.myDiaryData!);
+                                        notifier.setMyDiaryData(
+                                            notifier.diaryList![index + 1]);
+                                        if (nowDate == notifier.currentDate) {
+                                          notifier.setRightArrow(false);
+                                        }
                                       },
                                       child: const Center(
                                         child: Icon(

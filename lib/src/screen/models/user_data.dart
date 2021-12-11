@@ -8,18 +8,20 @@ class UserData {
       {this.uid,
       this.name,
       this.sex,
+      this.age,
       this.height,
       this.weight,
       this.bmi,
-      this.activity});
+      this.lifestyle});
 
   String? uid;
   String? name;
   String? sex;
+  int? age;
   double? height;
   double? weight;
   double? bmi;
-  String? activity;
+  String? lifestyle;
 
   factory UserData.fromJson(Map<String, dynamic> json) =>
       _$UserDataFromJson(json);

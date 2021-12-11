@@ -43,7 +43,8 @@ class BodyMeasurementView extends StatelessWidget {
                 ),
                 child: Consumer<DiaryProvider>(builder: (context, notifier, _) {
                   var userData = notifier.userData;
-                  return Column(
+                  if (notifier.userData != null) {
+                    return Column(
                     children: <Widget>[
                       Padding(
                         padding:
@@ -78,7 +79,7 @@ class BodyMeasurementView extends StatelessWidget {
                                       padding: const EdgeInsets.only(
                                           left: 4, bottom: 3),
                                       child: Text(
-                                        userData.weight.toString(),
+                                        userData!.weight.toString(),
                                         textAlign: TextAlign.center,
                                         style: const TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -246,6 +247,10 @@ class BodyMeasurementView extends StatelessWidget {
                       )
                     ],
                   );
+                  } else {
+                    notifier.getUserData();
+                    return const Center(child: CircularProgressIndicator());
+                  }
                 }),
               ),
             ),

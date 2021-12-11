@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:nutria/src/screen/login/sign_in_page.dart';
+import 'package:nutria/src/service/diary_provider.dart';
 import 'package:nutria/src/settings/settings_view.dart';
+import 'package:provider/provider.dart';
 
 import 'fitness_app_home_screen.dart';
 
